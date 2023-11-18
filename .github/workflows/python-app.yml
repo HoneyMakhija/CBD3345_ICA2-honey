@@ -18,12 +18,11 @@ jobs:
         run: echo "${{ secrets.PAT }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
       - name: Pull Docker Image
-        run: docker pull ghcr.io/myapp-image:latest
+        run: docker pull ghcr.io/honeymakhija/cbd3345_ica2/myapp-image:latest
 
       - name: Run Docker Container with Tests
         run: |
-          docker run --rm ghcr.io/myapp-image:latest
-
+          docker run --rm ghcr.io/honeymakhija/cbd3345_ica2/myapp-image:latest
 
       - uses: actions/checkout@v2
       - name: Set up Python 3.8
