@@ -13,6 +13,11 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+        with:
+          platforms: all
+
       - name: Authenticate with Github
         run: echo "${{ secrets.PAT }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
@@ -21,7 +26,7 @@ jobs:
 
       - name: Run Docker Container with Tests
         run: |
-          docker run --rm ghcr.io/honeymakhija/cbd3345_ica2/myapp-image:latest pytest
+          docker run --rm --privileged multiarch/qemu-user-static --reset -p yes ghcr.io/honeymakhija/cbd3345_ica2/myapp-image:latest pytest
 
       - name: Set up Python 3.8
         uses: actions/setup-python@v2
