@@ -1,57 +1,19 @@
-name: Python application test
+name: Parent Workflow
 
 on:
   push:
     branches: [main]
 
 jobs:
-  build:
-
+  trigger_child_workflow:
     runs-on: ubuntu-latest
-  
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
-
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v1
+      - name: Trigger Child Workflow
+        uses: actions/github-script@v4
         with:
-          platforms: all
-
-      - name: Authenticate with Github
-        run: echo "${{ secrets.PAT }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
-
-      - name: Pull Docker Image
-        run: docker pull ghcr.io/honeymakhija/cbd3345_ica2/myapp-image:latest
-
-      - name: Run Docker Container with Tests
-        run: |
-          docker run --rm --privileged multiarch/qemu-user-static --reset -p yes ghcr.io/honeymakhija/cbd3345_ica2/myapp-image:latest pytest
-
-      - name: Set up Python 3.8
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.8
-
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          python -m pip install -r requirements.txt
-
-      - name: Run tests
-        run: |
-          pytest test_app.py
-
-      - name: Write test results to file
-        run: |
-          if [ $? -eq 0 ]; then
-            echo "All tests passed" > test_file.txt
-          else
-            echo "Tests failed" > test_file.txt
-          fi
-
-      - name: Archive test file
-        uses: actions/upload-artifact@v2
-        with:
-          name: test-file
-          path: test_file.txt
+          script: |
+            const childWorkflow = await github.actions.createWorkflowDispatch({
+              workflow_id: 'child.yml', // The name of your child workflow file
+              ref: 'main', // The branch where the child workflow will run
+            });
+            console.log(`Child workflow run ID: ${childWorkflow.data.id}`);
