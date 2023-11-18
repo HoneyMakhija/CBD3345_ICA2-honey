@@ -1,0 +1,13 @@
+name: 'Checkout Branch'
+description: 'Checks out a specific branch of the repository'
+inputs:
+  branch:
+    description: 'The branch to checkout'
+    required: true
+runs:
+  using: 'composite'
+  steps:
+    - name: Checkout branch
+      uses: actions/checkout@v2
+      with:
+        ref: ${{ inputs.branch }}
