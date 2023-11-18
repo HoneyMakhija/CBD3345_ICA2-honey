@@ -2,13 +2,12 @@ name: Python application test
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   build:
 
     runs-on: ubuntu-latest
-
   
     steps:
       - name: Checkout Repository
@@ -22,20 +21,22 @@ jobs:
 
       - name: Run Docker Container with Tests
         run: |
-          docker run --rm ghcr.io/honeymakhija/cbd3345_ica2/myapp-image:latest
+          docker run --rm ghcr.io/honeymakhija/cbd3345_ica2/myapp-image:latest pytest
 
-      - uses: actions/checkout@v2
       - name: Set up Python 3.8
         uses: actions/setup-python@v2
         with:
           python-version: 3.8
+
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          python -m pip install -r requirements.txt
+
       - name: Run tests
         run: |
           pytest test_app.py
+
       - name: Write test results to file
         run: |
           if [ $? -eq 0 ]; then
@@ -43,6 +44,7 @@ jobs:
           else
             echo "Tests failed" > test_file.txt
           fi
+
       - name: Archive test file
         uses: actions/upload-artifact@v2
         with:
