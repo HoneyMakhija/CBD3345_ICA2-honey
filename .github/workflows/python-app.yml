@@ -5,15 +5,36 @@ on:
     branches: [main]
 
 jobs:
-  trigger_child_workflow:
+  build-and-test:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+        with:
+          platforms: all
+
+      - name: Authenticate with Github
+        run: echo "${{ secrets.PAT }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Pull Docker Image
+        run: docker pull ghcr.io/honeymakhija/cbd3345_ica2/myapp-image:latest
+
+      - name: Run Docker Container with Tests
+        run: |
+          docker run --rm --privileged multiarch/qemu-user-static --reset -p yes ghcr.io/honeymakhija/cbd3345_ica2/myapp-image:latest pytest
+
       - name: Trigger Child Workflow
         uses: actions/github-script@v4
         with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const childWorkflow = await github.actions.createWorkflowDispatch({
-              workflow_id: 'child.yml', // The name of your child workflow file
-              ref: 'main', // The branch where the child workflow will run
+            const { data: workflow } = await github.actions.createWorkflowDispatch({
+              owner: 'your_username',
+              repo: 'your_repo_name',
+              workflow_file: 'child_workflow.yml',
+              ref: 'main'
             });
-            console.log(`Child workflow run ID: ${childWorkflow.data.id}`);
+            console.log(`Workflow ${workflow.id} triggered`);
