@@ -17,7 +17,7 @@ jobs:
 
       - name: Pull Docker Image
         run: |
-          docker inspect ghcr.io/honeymakhija/ica2_image:latest 
+          docker pull ghcr.io/honeymakhija/ica2_image:latest 
 
       - name: Run Docker Container with Tests
         run: |
