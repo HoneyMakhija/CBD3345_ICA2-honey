@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Use custom action to checkout branch
-        uses: your-github-username/your-action-repository@main
+        uses: honeymakhija/cbd3345_ICA2-honey@main
         with:
           branch: "main"
 
