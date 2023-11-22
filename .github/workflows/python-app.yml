@@ -30,3 +30,9 @@ jobs:
       - name: Run tests
         run: |
           pytest test_app.py
+
+      - name: Archive test file
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-file
+          path: test_file.txt
