@@ -20,7 +20,7 @@ jobs:
         run: echo "${{ secrets.PAT }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
       - name: Pull Docker Image
-        run: docker pull ghcr.io/myapp-image1:latest
+        run: docker pull ghcr.io/cbd3345_ica2-honey/myapp-image1 
 
       - name: Run Docker Container with Tests
         run: |
