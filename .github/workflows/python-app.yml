@@ -7,15 +7,25 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    services:
-      myapp:
-        image: ghcr.io/honeymakhija/cbd3345_ica2-honey/myapp-image1:latest
-        ports:
-          - 8080:8080
-        options: --entrypoint "python -m test_app" 
+
+    
+    
 
     
     steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Authenticate with Github
+        run: echo "${{ secrets.PAT }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Pull Docker Image
+        run: docker pull ghcr.io/myapp-image1:latest
+
+      - name: Run Docker Container with Tests
+        run: |
+          docker run --rm ghcr.io/myapp-image1:latest
+
       - name: Use custom action to checkout branch
         uses: honeymakhija/cbd3345_ica2-honey@main
         with:
