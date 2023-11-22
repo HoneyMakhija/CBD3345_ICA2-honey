@@ -7,10 +7,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-
-    
-    
-
     
     steps:
       - name: Checkout Repository
@@ -21,7 +17,7 @@ jobs:
 
       - name: Pull Docker Image
         run: |
-          docker pull ghcr.io/ica2_image:latest 
+          docker inspect ghcr.io/ica2_image:latest 
 
       - name: Run Docker Container with Tests
         run: |
