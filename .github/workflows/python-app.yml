@@ -6,6 +6,15 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
+    services:
+      myapp:
+        image: ghcr.io/honeymakhija/cbd3345_ica2/myapp-image:latest
+        ports:
+          - 8080:8080
+        options: --entrypoint "python -m test_app" 
+
+    
     steps:
       - name: Use custom action to checkout branch
         uses: honeymakhija/cbd3345_ica2-honey@main
