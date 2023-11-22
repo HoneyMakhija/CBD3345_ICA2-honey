@@ -21,11 +21,11 @@ jobs:
 
       - name: Pull Docker Image
         run: |
-          docker pull ghcr.io/myapp-image:latest 
+          docker pull ghcr.io/ica2_image:latest 
 
       - name: Run Docker Container with Tests
         run: |
-          docker run --rm ghcr.io/myapp-image:latest
+          docker run --rm ghcr.io/ica2_image:latest
 
       - name: Use custom action to checkout branch
         uses: honeymakhija/cbd3345_ica2-honey@main
