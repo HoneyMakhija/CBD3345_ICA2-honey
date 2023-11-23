@@ -5,11 +5,11 @@ on:
 
 jobs:
   build:
-    runs-on: self-hosted[${{ matrix.runner }}]
+    runs-on: ubuntu-latest
 
     strategy:
       matrix:
-        runner: [Windows_Runner, Linux_Runner]
+        runner: ubuntu-latest
 
     
     steps:
