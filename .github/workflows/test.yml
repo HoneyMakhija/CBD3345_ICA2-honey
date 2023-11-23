@@ -13,6 +13,14 @@ jobs:
         uses: honeymakhija/cbd3345_ICA2-honey@main
         with:
           branch: "main"
+          
+      - name: Write test results to file
+        run: |
+         if [ $? -eq 0 ]; then
+          echo "All tests passed" > test_file.txt
+          else
+          echo "Tests failed" > test_file.txt
+           fi
 
       - name: Archive test file
         uses: actions/upload-artifact@v2
