@@ -5,7 +5,7 @@ on:
 
 jobs:
   build:
-    runs-on: self-hosted[Windows_Runner]
+    runs-on: self-hosted[Linux_Runner]
 
     
     steps:
