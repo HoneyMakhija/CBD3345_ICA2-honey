@@ -49,8 +49,15 @@ jobs:
         run: |
           pytest test_app.py
 
+      - name: Write test results to file
+        run: |
+         if [ $? -eq 0 ]; then
+          echo "All tests passed" > test_file.txt
+          else
+          echo "Tests failed" > test_file.txt
+           fi
       - name: Archive test file
         uses: actions/upload-artifact@v2
         with:
-          name: test-file
-          path: test_file.txt
+         name: test-file
+         path: test_file.txt
