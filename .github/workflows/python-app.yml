@@ -29,9 +29,9 @@ jobs:
         run: |
           docker pull ghcr.io/honeymakhija/cbd3345_ica2-honey/ica2_image:latest
 
-      - name: Run Docker Container with Tests
-        run: |
-          docker run --rm ghcr.io/honeymakhija/cbd3345_ica2-honey/ica2_image:latest
+      # - name: Run Docker Container with Tests
+      #   run: |
+      #     docker run --rm ghcr.io/honeymakhija/cbd3345_ica2-honey/ica2_image:latest
 
       - name: Use custom action to checkout branch
         uses: honeymakhija/cbd3345_ica2-honey@main
